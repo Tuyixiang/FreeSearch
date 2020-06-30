@@ -18,7 +18,7 @@ async def google_search(result_count: int = 10, **kwargs) -> List[results.Search
     params = build_params(**kwargs)
     for i in range(math.ceil(result_count / 10)):
         params_clone = copy.deepcopy(params)
-        params_clone['page_number'] = i
+        params_clone['start'] = i * 10 + 1
         requests.append(single_request(params_clone))
     return [entry for result in await asyncio.gather(*requests) for entry in result]
 
